@@ -4,28 +4,30 @@ function displayStories() {
     url: "https://usmanlive.com/wp-json/api/stories",
     method: "GET",
     dataType: "json",
-    success: function (data) {
-      var storiesList = $("#storiesList");
-      storiesList.empty();
-
-      $.each(data, function (index, story) {
-        storiesList.append(
-          `<div class="mb-3">
-                <h3>${story.title}</h3>
-                <div>${story.content}</div>
-                <div>
-                    <button class="btn btn-info btn-sm mr-2 btn-edit" data-id="${story.id}">Edit</button>
-                    <button class="btn btn-danger btn-sm mr-2 btn-del" data-id="${story.id}">Delete</button>
-                </div>
-            </div>
-            <hr />
-            `
-        );
-      });
-    },
+    success: handleResponse,
     error: function (error) {
       console.error("Error fetching stories:", error);
     },
+  });
+}
+
+function handleResponse(data) {
+  var storiesList = $("#storiesList");
+  storiesList.empty();
+
+  $.each(data, function (index, story) {
+    storiesList.append(
+      `<div class="mb-3">
+            <h3>${story.title}</h3>
+            <div>${story.content}</div>
+            <div>
+                <button class="btn btn-info btn-sm mr-2 btn-edit" data-id="${story.id}">Edit</button>
+                <button class="btn btn-danger btn-sm mr-2 btn-del" data-id="${story.id}">Delete</button>
+            </div>
+        </div>
+        <hr />
+        `
+    );
   });
 }
 // Function to delete a story
